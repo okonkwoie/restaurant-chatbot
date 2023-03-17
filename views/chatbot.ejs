@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>Chatbot</title>
@@ -19,6 +19,17 @@
       const userInput = document.getElementById("user-input");
       let chatbotSession = null;
 
+      // Display welcome message and options on page load
+      fetch("/chatbot", {
+        method: "GET",
+      })
+        .then(response => response.text())
+        .then(data => {
+          messageList.innerHTML += `<li>Bot: ${data}</li>`;
+          chatbotSession = JSON.parse(data.split("session:")[1]);
+        })
+        .catch(error => {console.log(error)});
+
       chatForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const message = userInput.value;
@@ -31,7 +42,7 @@
         messageList.innerHTML += `<li>You: ${message}</li>`;
 
         // Send the message to the server
-        fetch("/chatbot", {
+        fetch("/chatbot/place-order", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,15 +52,15 @@
             session: chatbotSession,
           }),
         })
-          .then((response) => response.json())
-          .then((data) => {
+          .then(response => response.json())
+          .then(data => {
             // Append chatbot message to the chat window
             messageList.innerHTML += `<li>Bot: ${data.message}</li>`;
             // Update the chatbot session ID
             chatbotSession = data.session;
           })
-          .catch((error) => console.error(error));
+          .catch(error => {console.log(error)});
       }
     </script>
   </body>
-</html>
+</html> -->
