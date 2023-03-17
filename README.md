@@ -1,2 +1,2 @@
-# restaurant-chatbox
-restaurant chatbox that assists customers in placing orders
+# restaurant-chatbot
+restaurant chatbot that assists customers in placing orders
