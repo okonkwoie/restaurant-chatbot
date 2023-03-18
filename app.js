@@ -13,6 +13,7 @@ const app = express()
 // middlewares
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+app.use(express.static('public'));
 
 // set up session middleware
 app.use(session({

@@ -5,7 +5,7 @@ function chatbotPage(req, res){
         req.session.deviceId = req.headers['user-agent'];
         console.log(req.session)
       } 
-    
+        const sessionID = req.session.id
         const welcomeMessage = "Welcome to Chops and Grills";
     
         const options = [
@@ -17,7 +17,7 @@ function chatbotPage(req, res){
         ];
     
         const message = welcomeMessage + "\n" + "\n" + options.join("\n");
-        res.status(200).send(message);
+        res.send(message);
 }
 
 async function placeOrder(req, res){
@@ -31,26 +31,26 @@ async function placeOrder(req, res){
       req.session.menuItems = menuItems; //storing menu item into the session
 
       const message = "Please select an item number to order:" + "\n" + "\n" + itemList.join("\n");
-      res.status(200).json({ message: message, session: req.session });
+      res.status(200).json(message);
     } 
     catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Error retrieving menu items" });
+      res.json({ messages: "Error retrieving menu items" });
     }
 
   } else if (req.session.menuItems && !isNaN(userMessage) && userMessage > 0 && userMessage <= req.session.menuItems.length) {
     // User selected an item number, store in session
-    const itemIndex = parseInt(userMessage) - 1 
+    const itemIndex = parseInt(userMessage) - 2
 
     if (req.session.menuItems[itemIndex]) {
       const selectedItem = req.session.menuItems[itemIndex]
       req.session.selectedItem = selectedItem;
       const message = `You selected ${selectedItem.name}. Type "99" to proceed to checkout`;
-      res.status(200).json({ message: message, session: req.session });
+      res.json(message);
 
     } else {
       const message = "Invalid item number. Please select again:";
-      res.status(200).json({ message: message, session: req.session });
+      res.json({ messages: message });
     }
   }
 }
@@ -74,7 +74,7 @@ function checkoutOrder(req, res){
 
     req.session.order = order //saving user's order into session
     const message = `Your order ${selectedItem.name} is placed! Type "1" to place new order`
-    res.status(200).json({ message: message, session: req.session})
+    res.status(200).json(message)
 
   } else {
     const message = `No order to place`

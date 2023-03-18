@@ -7,7 +7,7 @@ const chatbotRouter = express.Router();
 chatbotRouter.get('/', chatbotController.chatbotPage)
 
 // user selects 1
-chatbotRouter.post("/place-order", chatbotController.placeOrder)
+chatbotRouter.post('/place-order', chatbotController.placeOrder)
 
 // when user selects 99
 chatbotRouter.post('/checkout-order', chatbotController.checkoutOrder)
